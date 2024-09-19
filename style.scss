@@ -1,45 +1,64 @@
-// no BackToTop component styles
-@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-
-.container {
-  font-family: "Montserrat", sans-serif;
-  color: #6c767a;
-  text-align: center;
-  width: calc(100% - 30px);
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-h1 {
-  color: #03a9f4;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-// BackToTop component styles
-.back-to-top {
+#button {
   display: inline-block;
+  background-color: #FF9800;
+  width: 50px;
+  height: 50px;
   text-align: center;
-  vertical-align: middle;
-  user-select: none;
-  padding: 0.175rem 0.55rem;
-  line-height: 1.1;
-  border-radius: 0.25rem;
-  border-color: transparent;
-  outline: none;
-  width: 40px;
-  height: 40px;
+  border-radius: 4px;
   position: fixed;
   bottom: 30px;
   right: 30px;
-  cursor: pointer;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
   opacity: 0;
   visibility: hidden;
   z-index: 1000;
-  transition: background-color 0.3s, opacity 0.4s, visibility 0.4s;
+}
+#button::after {
+  content: "\f077";
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#button:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#button:active {
+  background-color: #555;
+}
+#button.show {
+  opacity: 1;
+  visibility: visible;
+}
 
-  &.show-back-to-top {
-    opacity: 1;
-    visibility: visible;
+/* Styles for the content section */
+
+.content {
+  width: 77%;
+  margin: 50px auto;
+  font-family: 'Merriweather', serif;
+  font-size: 17px;
+  color: #6c767a;
+  line-height: 1.9;
+}
+@media (min-width: 500px) {
+  .content {
+    width: 43%;
   }
+  #button {
+    margin: 30px;
+  }
+}
+.content h1 {
+  margin-bottom: -10px;
+  color: #03a9f4;
+  line-height: 1.5;
+}
+.content h3 {
+  font-style: italic;
+  color: #96a2a7;
 }
