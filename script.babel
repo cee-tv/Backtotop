@@ -1,0 +1,160 @@
+//react
+import React, { useState, useEffect } from 'https://esm.sh/react@18.2.0';
+//react dom
+import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
+//tween JS
+import { update, Tween, Easing } from 'https://cdn.skypack.dev/@tweenjs/tween.js@19.0.0';
+
+const BackToTop = ({ scrollAnimationTime, btnColor, iconColor }) => {
+  const [showBtn, setShowBtn] = useState(false);
+
+  useEffect(() => {
+    const showHideScrollBtn = () => {
+      let currentScrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+      setShowBtn(currentScrollTop > 300);
+    };
+
+    window.addEventListener('scroll', showHideScrollBtn);
+    window.addEventListener('load', showHideScrollBtn);
+
+    return () => {
+      window.removeEventListener('scroll', showHideScrollBtn);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    const coords = { y: window.scrollY || window.pageYOffset };
+
+    new Tween(coords)
+      .to({ y: 0 }, scrollAnimationTime && scrollAnimationTime > 0 ? scrollAnimationTime : 700)
+      .easing(Easing.Quadratic.Out)
+      .onUpdate(function () {
+        window.scrollTo(0, coords.y);
+      })
+      .start();
+    requestAnimationFrame(animate);
+  };
+
+  // required function by tweenJS
+  const animate = (time) => {
+    requestAnimationFrame(animate);
+    update(time);
+  };
+
+  return (
+    <button
+      className={`back-to-top ${showBtn ? 'show-back-to-top' : ''}`}
+      style={{ backgroundColor: btnColor ? btnColor : '#dc3545' }}
+      onClick={scrollToTop}
+    >
+      <svg
+        style={{ fill: iconColor ? iconColor : '#fff' }}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 448 512"
+      >
+        <path d="M6.101 359.293L25.9 379.092c4.686 4.686 12.284 4.686 16.971 0L224 198.393l181.13 180.698c4.686 4.686 12.284 4.686 16.971 0l19.799-19.799c4.686-4.686 4.686-12.284 0-16.971L232.485 132.908c-4.686-4.686-12.284-4.686-16.971 0L6.101 342.322c-4.687 4.687-4.687 12.285 0 16.971z" />
+      </svg>
+    </button>
+  );
+};
+
+const App = () => (
+  <div className="container">
+    {/*BackToTop properties:
+    - btnColor => the background color of the button (default: #dc3545)
+    - iconColor => the color of the icon (default: #fff)
+    - scrollAnimationTime => scroll top animation time in milliseconds (default: 700)*/}
+    <BackToTop btnColor="#dc3545" iconColor="#fff" scrollAnimationTime={700} />
+    <h1>Scroll down to see the button</h1>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+    <p>
+      Mauris sollicitudin fermentum libero. Duis lobortis massa imperdiet quam. Nulla porta dolor.
+      Fusce neque. Etiam imperdiet imperdiet orci. Phasellus leo dolor, tempus non, auctor et,
+      hendrerit quis, nisi. Ut leo. Suspendisse eu ligula. Praesent adipiscing. Nam at tortor in
+      tellus interdum sagittis. Etiam sit amet orci eget eros faucibus tincidunt. Morbi mollis
+      tellus ac sapien. Duis vel nibh at velit scelerisque suscipit. Donec pede justo, fringilla
+      vel, aliquet nec, vulputate eget, arcu. Maecenas nec odio et ante tincidunt tempus. Fusce
+      egestas elit eget lorem. Nunc sed turpis. Nullam vel sem. Pellentesque dapibus hendrerit
+      tortor. Curabitur nisi. In hac habitasse platea dictumst. Sed a libero. Phasellus dolor. Duis
+      arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Quisque libero metus,
+      condimentum nec, tempor a, commodo mollis, magna.
+    </p>
+  </div>
+);
+
+const container = document.getElementById('app'),
+  root = createRoot(container);
+
+root.render(<App />);
